@@ -1,0 +1,421 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<title>Tool for Diversity Visualization on the Level of Chemical Scaffolds</title>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+
+	<!-- T H E M E   C S S and F O N T and I C O N S-->
+	<!-- <link type="text/css" rel="stylesheet" href="css/basic_theme.css"/> -->
+	<link href="fonts/Roboto-Regular.ttf" rel="stylesheet">
+	<link href="fonts/RobotoMono-Regular.ttf" rel="stylesheet">
+	<script type="text/javascript">document.documentElement.setAttribute('theme', 'tdv');</script>
+	<!-- CSS -->
+	<link type="text/css" rel="stylesheet" href="css/materialize_v1.css" media="screen,projection"/>
+	<link type="text/css" rel="stylesheet" href="css/addition.css"/>
+</head>
+<body>
+	<!-- N A V I G A T I O N -->
+	<header class="pb-6">
+	<nav class = "blue lighten-4">
+		<div class="nav-wrapper">
+			<a href="http://127.0.0.1/tdv/" <span class="logo_svg"><img style="height: 95%; width: auto; vertical-align: middle;" src="img/logo_tdv.svg"></span></a>
+			<ul id="nav-mobile" class="right hide-on-med-and-down">
+				<li><a class="modal-trigger" href="#modal_about">About</a></li>
+				<li><a class="modal-trigger" href="#modal_interpretation">Interpretation</a></li>
+				<li><a class="modal-trigger" href="#modal_contacts">Contacts</a></li>
+			</ul>
+		</div>
+	</nav>
+	</header>
+	<!-- W O R K I N G   S P A C E -->
+	<main class="pt-6 valign-wrapper">
+	<div class="container" id="main_container_input">
+		<div id="progress_bar" class="section" hidden>
+			<div class="row">
+				<div class="progress blue lighten-5">
+      		<div class="indeterminate blue lighten-4" style="width: 70%"></div>
+  			</div>
+  		</div>
+  	</div>	
+		<div id="input_one" class="section">
+			<div class="row">
+				<div class = "s12">
+					<form action = "#" id = "form_file">
+						<!-- select scaffold type -->
+						<div class="switch left-align">
+							<!--#red need to select the particular span in CSS when the input is checked -->
+    					<label>
+      					<span id="non_generic_ttip" class="span_selected" data-position="top">NON-GENERIC</span>
+      					<input id = "scaffold_checkbox" type="checkbox">
+      					<span class="lever"></span>
+      					<span id="generic_ttip" class="span_notSelected" data-position="top">GENERIC</span>
+    					</label>
+						</div>
+						<div id="switch_spacer_1" class="section"></div>
+						<div id="switch_spacer_2" class="section"></div>
+  					<div class="file-field input-field outlined">
+  						<div class="btn grey darken-1">
+      					<span>File:</span>
+      					<input id="chem_file" type="file">
+    					</div>
+    					<div class="file-path-wrapper">
+      					<input id="chem_file_wrapper" class="file-path validate left-align truncate" type="text" placeholder="Drag your file with chemical structures here, please.">
+    					</div>
+  					</div>
+					</form>
+				</div>
+			</div>
+		</div>
+		<div id="input_two" class = "section center-align">
+			<div class="row">
+				<div class = "s12">
+					<a id="diversity_btn" type="submit" form="form_file" class="btn grey darken-1">assess chemical diversity</a>
+				</div>
+			</div>
+		</div>
+		<div class="section"></div>
+		<div id="test" class="section center-align">
+			<div class="row">
+				<div>
+					<span style="color:red;">T E S T: upload the file containing chemical structures, process it in browser and wait for the response from server. After that the page could be safely reloaded.</span>
+				</div>
+			</div>
+		</div>
+	<!-- M O D A L S -->
+	<div id="modal_about" class="modal modal-fixed-footer">
+		<div class="modal-content">
+			<h4>Tool for Diversity Visualization on the Level of Chemical Scaffolds</h4>
+				<p>. . .   A B O U T   . . .</p>
+		</div>
+		<div class="modal-footer">
+			<a href="#!" class="modal-close btn text">close</a>
+		</div>
+	</div>
+	<div id="modal_interpretation" class="modal modal-fixed-footer">
+		<div class="modal-content">
+			<h4>Visualization of Scaffold Diversity</h4>
+				<p>. . .   I N T E R P R E T A T I O N   . . .</p>
+		</div>
+		<div class="modal-footer">
+			<a href="#!" class="modal-close btn text">close</a>
+		</div>
+	</div>
+	<div id="modal_contacts" class="modal modal-fixed-footer">
+		<div class="modal-content">
+			<h4>Contacts</h4>
+				<p>. . .   C O N T A C T S   . . .</p>
+		</div>
+		<div class="modal-footer">
+			<a href="#!" class="modal-close btn text">close</a>
+		</div>
+	</div>
+	</main>
+	<!-- F O O T   N O T E S -->
+	<footer>
+		<div class="container">
+			<div class="row">
+				<div class="l12 s12">
+					<p>The work is supported by the Russian Science Foundation, Project <a href="https://rscf.ru/en/project/23-73-01058/" target="_blank">23-73-01058</a></p>
+					<p><a href="http://way2drug.com" target="_blank">Way2Drug</a> &#169 2011 - <script type="text/javascript">document.write(new Date().getFullYear());</script> | 
+ 						<a href="http://way2drug.com/prpol.php" target="_blank">Privacy Policy</a>
+ 					</p>
+				</div>
+			</div>
+		</div>
+	</footer>
+</body>
+</html>
+	<!-- S C R I P T S -->
+	<script type="text/javascript" src="js/materialize_v1_min.js"></script>
+	<script type="text/javascript" src="js/RDKit_min.js"></script>
+	<script type="text/javascript" src="js/papaparse.min.js"></script>
+	<script>
+    window
+      .initRDKitModule({ locateFile: () => 'wasm/RDKit_min.wasm' })
+      .then(function (RDKit) {
+      	new M.Toast({html: `RDKit version:  ${RDKit.version()}`});
+        window.RDKit = RDKit;
+      })
+      .catch(() => {
+      	new M.Toast({html: "RDKit is not available, please reload the page or try again latter"});
+        console.log("RDKit is not available, please reload the page or try again latter");
+      });
+	document.addEventListener('DOMContentLoaded', function() {
+		//Modals
+		const elems_modal = document.querySelectorAll('.modal');
+  	const modal_instances = M.Modal.init(elems_modal, {
+    	// specify options here
+  	});
+  	//Checkbox
+  	const elem_checkbox = document.getElementById("scaffold_checkbox");
+  	const elem_span_gen = document.getElementById("generic_ttip");
+  	const elem_span_nongen = document.getElementById("non_generic_ttip");
+  	//Labels for scaffold
+  	elem_checkbox.addEventListener('change', (event) => {
+  		if (event.currentTarget.checked) {
+    		elem_span_nongen.className = "span_notSelected";
+    		elem_span_gen.className = "span_selected";
+  		} else {
+    		elem_span_nongen.className = "span_selected";
+    		elem_span_gen.className = "span_notSelected";
+  		}
+		});
+  	//Tooltips for scaffolds
+  	//#red select examples, which are more illustrative
+  	const nonGen_ttip = document.getElementById("non_generic_ttip");
+  	const nonGen_ttip_instance = M.Tooltip.init(nonGen_ttip, {
+  		html: "<svg xmlns='http://www.w3.org/2000/svg' xml:space='preserve' id='nonGen_svg' viewBox='0 0 80 50'><defs><marker id='a' markerHeight='1' markerWidth='1' orient='auto-start-reverse' overflow='visible' preserveAspectRatio='xMidYMid' refX='0' refY='0' viewBox='0 0 1 1'><path fill='context-stroke' fill-rule='evenodd' d='m1 0-3 3h-2l3-3-3-3h2z'/></marker></defs><path fill='none' stroke='red' stroke-width='.53' d='M71.52 6.62v2.72' class='bond-0 atom-0 atom-1'/><path fill='none' stroke='#000' stroke-width='.53' d='M71.52 9.34v2.73' class='bond-0 atom-0 atom-1'/><path fill='none' stroke='red' stroke-width='.53' d='M70.49 6.62v2.72' class='bond-0 atom-0 atom-1'/><path fill='none' stroke='#000' stroke-width='.53' d='M70.49 9.34v2.73' class='bond-0 atom-0 atom-1'/><path fill='none' stroke='#000' stroke-width='.53' d='m71.02 11.77 5.95 3.47' class='bond-1 atom-1 atom-2'/><path fill='none' stroke='#000' stroke-width='.53' d='M76.97 15.24v6.9' class='bond-2 atom-2 atom-3'/><path fill='none' stroke='#000' stroke-width='.53' d='m76.97 22.15-6 3.44m4.97-4.05-4.95 2.86' class='bond-3 atom-3 atom-4'/><path fill='none' stroke='#000' stroke-width='.53' d='M70.96 25.59v6.9' class='bond-4 atom-4 atom-5'/><path fill='none' stroke='#000' stroke-width='.53' d='m70.96 32.5-5.98 3.43' class='bond-5 atom-5 atom-6'/><path fill='none' stroke='#000' stroke-width='.53' d='m64.98 35.93-.02 6.93m-1.03-6.32v5.71' class='bond-6 atom-6 atom-7'/><path fill='none' stroke='#000' stroke-width='.53' d='m64.96 42.86-5.98 3.44' class='bond-7 atom-7 atom-8'/><path fill='none' stroke='#000' stroke-width='.53' d='M58.98 46.3 53 42.84m5.98 2.25-4.95-2.86' class='bond-8 atom-8 atom-9'/><path fill='none' stroke='#000' stroke-width='.53' d='M53 42.84V35.9' class='bond-9 atom-9 atom-10'/><path fill='none' stroke='#000' stroke-width='.53' d='m53 35.9 2.33-1.32' class='bond-10 atom-10 atom-11'/><path fill='none' stroke='#00f' stroke-width='.53' d='m55.33 34.58 2.33-1.32' class='bond-10 atom-10 atom-11'/><path fill='none' stroke='#000' stroke-width='.53' d='m54.03 36.51 2.06-1.19' class='bond-10 atom-10 atom-11'/><path fill='none' stroke='#00f' stroke-width='.53' d='m56.1 35.32 2.06-1.19' class='bond-10 atom-10 atom-11'/><path fill='none' stroke='#000' stroke-width='.53' d='m70.96 25.59-5.95-3.47' class='bond-11 atom-4 atom-12'/><path fill='none' stroke='#000' stroke-width='.53' d='M65.01 22.12v-6.9m1.03 6.32v-5.72' class='bond-12 atom-12 atom-13'/><path fill='none' stroke='#000' stroke-width='.53' d='m65.01 15.21 6-3.44' class='bond-27 atom-13 atom-1'/><path fill='none' stroke='#00f' stroke-width='.53' d='m60.33 33.26 2.33 1.35' class='bond-30 atom-11 atom-6'/><path fill='none' stroke='#000' stroke-width='.53' d='m62.66 34.6 2.32 1.33' class='bond-30 atom-11 atom-6'/><path fill='none' stroke='#000' stroke-width='.53' d='m71.3 11.93-.28-.16-.32.16m5.98 3.13.29.18v.34m0 6.22v.35l-.3.18m-5.71 9.82v.34l-.29.19m-5.71 9.82v.36l-.3.16m-5.39 3.1-.3.18-.3-.18M53.29 43l-.3-.16v-.35m.01-6.21v-.38l.13-.05M65.3 22.3l-.29-.18v-.34m0-6.22v-.35l.3-.15'/><path fill='red' d='M69.67 4.87q0-.72.34-1.09.35-.4 1-.4.67 0 1.01.4.35.37.35 1.09 0 .71-.35 1.11-.37.42-1 .42-.64 0-1-.42-.35-.4-.35-1.11m1.35 1.19q.45 0 .68-.3.24-.3.24-.9 0-.57-.24-.86-.23-.3-.68-.3-.45 0-.7.3-.23.29-.23.87 0 .6.24.9.24.29.69.29' class='atom-0'/><path fill='#00f' d='m58.34 31.01.96 1.56q.1.13.26.42.16.27.16.3V31h.4v2.94h-.4l-1.03-1.7q-.14-.2-.27-.45-.13-.2-.16-.29v2.44h-.37V31h.45' class='atom-11'/><path fill='none' stroke='red' stroke-width='.53' d='M21.55 6.62v2.72' class='bond-0 atom-0 atom-1'/><path fill='none' stroke='#000' stroke-width='.53' d='M21.55 9.34v2.73' class='bond-0 atom-0 atom-1'/><path fill='none' stroke='red' stroke-width='.53' d='M20.52 6.62v2.72' class='bond-0 atom-0 atom-1'/><path fill='none' stroke='#000' stroke-width='.53' d='M20.52 9.34v2.73' class='bond-0 atom-0 atom-1'/><path fill='none' stroke='#000' stroke-width='.53' d='M21.05 11.77 27 15.24' class='bond-1 atom-1 atom-2'/><path fill='none' stroke='#000' stroke-width='.53' d='M27 15.24v6.9' class='bond-2 atom-2 atom-3'/><path fill='none' stroke='#000' stroke-width='.53' d='m27 22.15-6 3.44m4.97-4.05-4.95 2.86' class='bond-3 atom-3 atom-4'/><path fill='none' stroke='#000' stroke-width='.53' d='M21 25.59v6.9' class='bond-4 atom-4 atom-5'/><path fill='none' stroke='#000' stroke-width='.53' d='m21 32.5-5.98 3.43m6-3.43L27 35.92' class='bond-5 atom-5 atom-6'/><path fill='none' stroke='#000' stroke-width='.53' d='m15.02 35.93-.03 6.93m-1.03-6.32v5.71' class='bond-6 atom-6 atom-7'/><path fill='none' stroke='#000' stroke-width='.53' d='M14.99 42.86 9 46.3' class='bond-7 atom-7 atom-8'/><path fill='none' stroke='#000' stroke-width='.53' d='m9.01 46.3-5.98-3.46m5.98 2.25-4.95-2.86' class='bond-8 atom-8 atom-9'/><path fill='none' stroke='#000' stroke-width='.53' d='M3.03 42.84V35.9' class='bond-9 atom-9 atom-10'/><path fill='none' stroke='#000' stroke-width='.53' d='m3.03 35.9 2.33-1.32' class='bond-10 atom-10 atom-11'/><path fill='none' stroke='#00f' stroke-width='.53' d='m5.36 34.58 2.33-1.32' class='bond-10 atom-10 atom-11'/><path fill='none' stroke='#000' stroke-width='.53' d='m4.06 36.51 2.07-1.19' class='bond-10 atom-10 atom-11'/><path fill='none' stroke='#00f' stroke-width='.53' d='m6.13 35.32 2.06-1.19' class='bond-10 atom-10 atom-11'/><path fill='none' stroke='#000' stroke-width='.53' d='m21 25.59-5.96-3.47' class='bond-11 atom-4 atom-12'/><path fill='none' stroke='#000' stroke-width='.53' d='M15.04 22.12v-6.9m1.03 6.32v-5.72' class='bond-12 atom-12 atom-13'/><path fill='none' stroke='#000' stroke-width='.53' d='m15.04 15.21 6-3.44' class='bond-27 atom-13 atom-1'/><path fill='none' stroke='#00f' stroke-width='.53' d='m10.36 33.26 2.33 1.35' class='bond-30 atom-11 atom-6'/><path fill='none' stroke='#000' stroke-width='.53' d='m12.69 34.6 2.33 1.33' class='bond-30 atom-11 atom-6'/><path fill='none' stroke='#000' stroke-width='.53' d='m21.34 11.93-.3-.16-.3.16m5.97 3.13.3.18v.34M27 21.8v.35l-.29.18M21 32.15v.34l-.3.19m-5.71 9.82v.36l-.3.16m-5.39 3.1-.29.18-.32-.18M3.32 43l-.29-.16v-.35m0-6.21v-.38l.13-.05M15.33 22.3l-.29-.18v-.34m0-6.22v-.35l.3-.15'/><path fill='red' d='M19.7 4.87q0-.72.34-1.09.35-.4 1-.4.67 0 1.01.4.35.37.35 1.09 0 .71-.35 1.11-.37.42-1 .42-.64 0-1-.42-.35-.4-.35-1.11m1.35 1.19q.45 0 .69-.3.23-.3.23-.9 0-.57-.23-.86-.24-.3-.7-.3-.44 0-.68.3-.24.29-.24.87 0 .6.24.9.24.29.69.29' class='atom-0'/><path fill='#00f' d='m8.37 31.01.96 1.56q.1.13.26.42.16.27.16.3V31h.4v2.94h-.4l-1.03-1.7-.27-.45q-.13-.2-.15-.29v2.44h-.38V31h.45' class='atom-11'/><path fill='none' stroke='#000' stroke-linejoin='round' stroke-miterlimit='40' stroke-width='.34' marker-end='url(#a)' d='M45.43 130.93h14.68' paint-order='fill markers stroke' transform='translate(-12.94 -101.89)'/></svg>"
+  	});
+  	const gen_ttip = document.getElementById("generic_ttip");
+  	const gen_ttip_instance = M.Tooltip.init(gen_ttip, {
+  		html: "<svg xmlns='http://www.w3.org/2000/svg' xml:space='preserve' id='gen_svg' viewBox='0 0 80 50'><defs><marker id='a' markerHeight='1' markerWidth='1' orient='auto-start-reverse' overflow='visible' preserveAspectRatio='xMidYMid' refX='0' refY='0' viewBox='0 0 1 1'><path fill='context-stroke' fill-rule='evenodd' d='m1 0-3 3h-2l3-3-3-3h2z'/></marker></defs><g fill='none' stroke='#000' stroke-width='.53'><path d='m71.02 11.77 5.95 3.47' class='bond-1 atom-1 atom-2'/><path d='M76.97 15.24v6.9' class='bond-2 atom-2 atom-3'/><path d='m76.97 22.15-6 3.44' class='bond-3 atom-3 atom-4'/><path d='M70.96 25.59v6.9' class='bond-4 atom-4 atom-5'/><path d='m70.96 32.5-5.98 3.43' class='bond-5 atom-5 atom-6'/><path d='m64.98 35.93-.02 6.93' class='bond-6 atom-6 atom-7'/><path d='m64.96 42.86-5.98 3.44' class='bond-7 atom-7 atom-8'/><path d='M58.98 46.3 53 42.84' class='bond-8 atom-8 atom-9'/><path d='M53 42.84V35.9' class='bond-9 atom-9 atom-10'/><path d='m70.96 25.59-5.95-3.47' class='bond-11 atom-4 atom-12'/><path d='M65.01 22.12v-6.9' class='bond-12 atom-12 atom-13'/><path d='m65.01 15.21 6-3.44' class='bond-27 atom-13 atom-1'/><path d='m71.3 11.93-.28-.16-.32.16m5.98 3.13.29.18v.34m0 6.22v.35l-.3.18m-5.71 9.82v.34l-.29.19m-5.71 9.82v.36l-.3.16m-5.39 3.1-.3.18-.3-.18'/><path d='m65 35.85-5.98-3.44' class='bond-7 atom-7 atom-8'/><path d='m59.02 32.41-5.97 3.47' class='bond-8 atom-8 atom-9'/><path d='m59.32 32.6-.3-.19-.31.19M53.29 43l-.3-.16v-.35m.01-6.21v-.38l.13-.05M65.3 22.3l-.29-.18v-.34m0-6.22v-.35l.3-.15'/></g><path fill='none' stroke='red' stroke-width='.53' d='M21.55 6.62v2.72' class='bond-0 atom-0 atom-1'/><path fill='none' stroke='#000' stroke-width='.53' d='M21.55 9.34v2.73' class='bond-0 atom-0 atom-1'/><path fill='none' stroke='red' stroke-width='.53' d='M20.52 6.62v2.72' class='bond-0 atom-0 atom-1'/><path fill='none' stroke='#000' stroke-width='.53' d='M20.52 9.34v2.73' class='bond-0 atom-0 atom-1'/><path fill='none' stroke='#000' stroke-width='.53' d='M21.05 11.77 27 15.24' class='bond-1 atom-1 atom-2'/><path fill='none' stroke='#000' stroke-width='.53' d='M27 15.24v6.9' class='bond-2 atom-2 atom-3'/><path fill='none' stroke='#000' stroke-width='.53' d='m27 22.15-6 3.44m4.97-4.05-4.95 2.86' class='bond-3 atom-3 atom-4'/><path fill='none' stroke='#000' stroke-width='.53' d='M21 25.59v6.9' class='bond-4 atom-4 atom-5'/><path fill='none' stroke='#000' stroke-width='.53' d='m21 32.5-5.98 3.43m6-3.43L27 35.92' class='bond-5 atom-5 atom-6'/><path fill='none' stroke='#000' stroke-width='.53' d='m15.02 35.93-.03 6.93m-1.03-6.32v5.71' class='bond-6 atom-6 atom-7'/><path fill='none' stroke='#000' stroke-width='.53' d='M14.99 42.86 9 46.3' class='bond-7 atom-7 atom-8'/><path fill='none' stroke='#000' stroke-width='.53' d='m9.01 46.3-5.98-3.46m5.98 2.25-4.95-2.86' class='bond-8 atom-8 atom-9'/><path fill='none' stroke='#000' stroke-width='.53' d='M3.03 42.84V35.9' class='bond-9 atom-9 atom-10'/><path fill='none' stroke='#000' stroke-width='.53' d='m3.03 35.9 2.33-1.32' class='bond-10 atom-10 atom-11'/><path fill='none' stroke='#00f' stroke-width='.53' d='m5.36 34.58 2.33-1.32' class='bond-10 atom-10 atom-11'/><path fill='none' stroke='#000' stroke-width='.53' d='m4.06 36.51 2.07-1.19' class='bond-10 atom-10 atom-11'/><path fill='none' stroke='#00f' stroke-width='.53' d='m6.13 35.32 2.06-1.19' class='bond-10 atom-10 atom-11'/><path fill='none' stroke='#000' stroke-width='.53' d='m21 25.59-5.96-3.47' class='bond-11 atom-4 atom-12'/><path fill='none' stroke='#000' stroke-width='.53' d='M15.04 22.12v-6.9m1.03 6.32v-5.72' class='bond-12 atom-12 atom-13'/><path fill='none' stroke='#000' stroke-width='.53' d='m15.04 15.21 6-3.44' class='bond-27 atom-13 atom-1'/><path fill='none' stroke='#00f' stroke-width='.53' d='m10.36 33.26 2.33 1.35' class='bond-30 atom-11 atom-6'/><path fill='none' stroke='#000' stroke-width='.53' d='m12.69 34.6 2.33 1.33' class='bond-30 atom-11 atom-6'/><path fill='none' stroke='#000' stroke-width='.53' d='m21.34 11.93-.3-.16-.3.16m5.97 3.13.3.18v.34M27 21.8v.35l-.29.18M21 32.15v.34l-.3.19m-5.71 9.82v.36l-.3.16m-5.39 3.1-.29.18-.32-.18M3.32 43l-.29-.16v-.35m0-6.21v-.38l.13-.05M15.33 22.3l-.29-.18v-.34m0-6.22v-.35l.3-.15'/><path fill='red' d='M19.7 4.87q0-.72.34-1.09.35-.4 1-.4.67 0 1.01.4.35.37.35 1.09 0 .71-.35 1.11-.37.42-1 .42-.64 0-1-.42-.35-.4-.35-1.11m1.35 1.19q.45 0 .69-.3.23-.3.23-.9 0-.57-.23-.86-.24-.3-.7-.3-.44 0-.68.3-.24.29-.24.87 0 .6.24.9.24.29.69.29' class='atom-0'/><path fill='#00f' d='m8.37 31.01.96 1.56q.1.13.26.42.16.27.16.3V31h.4v2.94h-.4l-1.03-1.7-.27-.45q-.13-.2-.15-.29v2.44h-.38V31h.45' class='atom-11'/><path fill='none' stroke='#000' stroke-linejoin='round' stroke-miterlimit='40' stroke-width='.34' marker-end='url(#a)' d='M48.2 134.31h14.67' paint-order='fill markers stroke' transform='translate(-15.7 -105.27)'/></svg>"
+  	});
+  	//TDV things
+  	//Function to process the file with chemical structures, try to make it non-blocking, SEE: https://stackoverflow.com/questions/10344498/best-way-to-iterate-over-an-array-without-blocking-the-ui?noredirect=1&lq=1
+  	const process_chemFile = async function(supplier) {
+  		//Some consts
+  		const input_one = document.querySelector("#input_one");
+  		const input_two = document.querySelector("#input_two");
+  		const progress_bar = document.querySelector("#progress_bar");
+  		const n_max_structs = 10000;
+  		const data_send = {};
+  		//Numbers for reporting
+  		let n_input_records;
+  		let n_valid_structs;
+  		let n_2upload_structs;
+  		//Use Promise here, SEE: https://developer.mozilla.org/en-US/docs/Web/API/FileReader/result
+			const file_reader = (file) =>
+ 				new Promise((resolve, reject) => {
+    			const fr = new FileReader();
+    			fr.onload = () => resolve(fr);
+    			fr.onerror = (err) => reject(err);
+    			fr.readAsText(file);
+  		});
+  		const allowed_extensions = new Set( ["TAB", "TSV", "CSV", "SDF"] );
+  		event.preventDefault();
+  		//Check the existence
+  		if ( typeof supplier.files[0] != "undefined" ) {
+  			//Get the extension
+  			extension = (supplier.files[0]['name'].slice(supplier.files[0]['name'].lastIndexOf(".") + 1)).toUpperCase();
+  			//Check size
+  			if (supplier.files[0]['size'] <= 100001000) {
+  				//Check extension
+  				if ( allowed_extensions.has(extension) ) {
+  				//Tell the user
+  				new M.Toast({html: 'Processing the file'});
+  				input_one.hidden = true;
+  				input_two.hidden = true;
+  				//Prepare to hold the string from file
+  				let data_raw;
+  				//Prepare to hold the parsed data
+  				let data_parsed;
+  				//Prepare to hold the pre-parsed data (SDF)
+  				let data_preparsed;
+  				//Prepare to hold the validated date
+  				let data_validated = [];
+  				//Get the data
+  				let data_promise = file_reader(supplier.files[0]);
+  				try {
+    				data_file = await data_promise;
+    			} catch (err) {
+    				new M.Toast({html: 'Something wrong with the file, try again'});
+    				input_one.hidden = false;
+  					input_two.hidden = false;
+  					return;
+  				}
+  				data_raw = data_file.result;
+  				console.log(extension);
+  				//Process accordingly
+  				switch (extension) {
+	  			 	case 'TAB':
+	  			 		let tab_config = {delimiter: "\t", header: false, skipEmptyLines: true};
+	  			 		//Skip headers manually
+	  			 		data_raw = data_raw.substring(data_raw.indexOf("\n") + 1);
+	  			 		data_parsed = Papa.parse(data_raw, tab_config);
+	  			 		//Check for errors:
+	  			 		if (data_parsed.errors.length) {
+	  			 			new M.Toast({html: `Something is wrong with the data structure: \"${data_parsed.errors[0]['message']}\"`});
+	  			 			input_one.hidden = false;
+  							input_two.hidden = false;
+	  			 			return;
+	  			 		}
+	  			 		data_parsed = data_parsed['data'];
+	  			 		if (data_parsed[0].length < 2) {
+	  			 			new M.Toast({html: `Something is wrong with the data structure: \"Less than two columns\"`});
+	  			 			return;
+	  			 		}
+	  			 		break;
+	  			 	case 'TSV':
+	  			 		let tsv_config = {delimiter: "\t", header: false, skipEmptyLines: true};
+	  			 		//Skip headers manually
+	  			 		data_raw = data_raw.substring(data_raw.indexOf("\n") + 1);
+	  			 		data_parsed = Papa.parse(data_raw, tsv_config);
+	  			 		//Check for errors:
+	  			 		if (data_parsed.errors.length) {
+	  			 			new M.Toast({html: `Something is wrong with the data structure: \"${data_parsed.errors[0]['message']}\"`});
+	  			 			input_one.hidden = false;
+  							input_two.hidden = false;
+	  			 			return;
+	  			 		}
+	  			 		data_parsed = data_parsed['data'];
+	  			 		if (data_parsed[0].length < 2) {
+	  			 			new M.Toast({html: `Something is wrong with the data structure: \"It has less than two columns\"`});
+	  			 			input_one.hidden = false;
+  							input_two.hidden = false;
+	  			 			return;
+	  			 		}
+	  			 		break;
+	  			 	case 'CSV':
+	  			 		let сsv_config = {header: false, skipEmptyLines: true, delimitersToGuess: [',', ';']};
+	  			 		//Skip headers manually
+	  			 		data_raw = data_raw.substring(data_raw.indexOf("\n") + 1);
+	  			 		data_parsed = Papa.parse(data_raw, сsv_config);
+	  			 		//Check for errors:
+	  			 		if (data_parsed.errors.length) {
+	  			 			new M.Toast({html: `Something is wrong with the data structure: \"${data_parsed.errors[0]['message']}\"`});
+	  			 			input_one.hidden = false;
+  							input_two.hidden = false;
+	  			 			return;
+	  			 		}
+	  			 		data_parsed = data_parsed['data'];
+	  			 		if (data_parsed[0].length < 2) {
+	  			 			new M.Toast({html: `Something is wrong with the data structure: \"Less than two columns\"`});
+	  			 			input_one.hidden = false;
+  							input_two.hidden = false;
+	  			 			return;
+	  			 		}
+	  			 		break;
+	  			 	case 'SDF':
+	  			 		console.log(extension);
+	  			 		//Prepare vars to store SDF fields
+	  			 		let mol_mol;
+	  			 		let mol_id;
+	  			 		let mol_data;
+	  			 		let mol_validated;
+	  			 		let smiles_validated;
+	  			 		let data_parsed_validity = 1;
+	  			 		//Prepare data_parsed to store the results
+	  			 		data_parsed = [];
+	  			 		//Prepare string for papaparsing
+	  			 		data_raw = data_raw.replaceAll(/(\r\n|\r|\n)/g, "_#e-o-l#_");
+	  			 		data_raw = data_raw.replaceAll("$$$$_#e-o-l#", "\r\n");
+	  			 		let sdf_config = {delimiter: "_#e-o-l#_>", header: false, skipEmptyLines: false};
+	  			 		data_preparsed = Papa.parse(data_raw, sdf_config);
+	  			 		test_preparsed = data_preparsed;
+	  			 		//Check for errors:
+	  			 		if (data_preparsed.errors.length) {
+	  			 			new M.Toast({html: `Something is wrong with the data structure`});
+	  			 			input_one.hidden = false;
+  							input_two.hidden = false;
+	  			 			return;
+	  			 		}
+	  			 		data_preparsed = data_preparsed['data'];
+	  			 		data_preparsed.pop();
+	  			 		//Make SDF records OK and select first 3 fields (MOL, ID, DATA)
+	  			 		for (let i = 0; i < data_preparsed.length; i++) {
+	  			 			if (typeof data_preparsed[i][0] != "undefined" && typeof data_preparsed[i][1] != "undefined") {
+	  			 				mol_mol = data_preparsed[i][0].replaceAll("_#e-o-l#_", "\r\n");
+	  			 				mol_id  = (( data_preparsed[i][1].replace(/^.+?(?=_#e-o-l#_)_#e-o-l#_/, "") ).replaceAll("_#e-o-l#_", "\r\n") ).trim();
+	  			 				if (typeof data_preparsed[i][2] != "undefined") {
+	  			 					mol_data  = (( data_preparsed[i][2].replace(/^.+?(?=_#e-o-l#_)_#e-o-l#_/, "") ).replaceAll("_#e-o-l#_", "\r\n") ).trim();
+	  			 				} else {mol_data = "";}
+	  			 				data_parsed.push([mol_id, mol_mol, mol_data]);
+	  			 			} else {
+	  			 				new M.Toast({html: `Something is wrong with the data structure: \"Less than two columns for the record ${i+1}\"`});
+	  			 				input_one.hidden = false;
+  								input_two.hidden = false;
+	  			 				return;
+	  			 			}
+  						}
+  				}
+  				//Count records
+  				n_input_records = data_parsed.length;
+  				//Break if the number of records > 15000
+  				if (n_input_records > 20000) {
+  					new M.Toast({html: 'Input have too many records: > 20000'});
+  					input_one.hidden = false;
+  					input_two.hidden = false;
+  					return;
+  				}
+  				console.log(`n_input_records: ${n_input_records}`);
+  				//make it temporally available #red
+  				test_parsed = data_parsed;
+  				console.log(`RDKit starts computations, minutes: ${new Date().getMinutes()}, seconds: ${new Date().getSeconds()}`);
+  				//Validate structures
+  				let chunker = 0;
+  				for (let i = 0; i < data_parsed.length; i++) {
+  					mol_validated = RDKit.get_mol(data_parsed[i][1]);
+  					try {
+  						smiles_validated = mol_validated.get_smiles();
+  					} catch(error) {
+  						smiles_validated = -1;
+  					}
+  					//Delete the processed mol to free the memory, SEE:
+  					try {
+  						mol_validated.delete();
+  					} catch(error) {
+  						console.log(`index: ${i}`);
+  						continue;
+  					}
+  					if (smiles_validated !== -1) {
+  						data_validated.push([data_parsed[i][0], smiles_validated, data_parsed[i][2]]);
+  					}
+  					//Provide the responsive UI
+  					chunker = chunker + 1;
+  					if (chunker === 60) {
+  						await new Promise(resolve => setTimeout(resolve, 0));
+  						chunker = 0;
+  					}
+  				}
+  				console.log(`RDKit ends computations, minutes: ${new Date().getMinutes()}, seconds: ${new Date().getSeconds()}`);
+  				n_valid_structs = data_validated.length;
+  				console.log(`n_valid_structs: ${n_valid_structs}`);
+  				test_validated = data_validated;
+  				//Select 10000 structures MAX
+  				if (n_valid_structs > 10000) {
+  					data_validated = data_validated.slice(0, 10000);
+  					new M.Toast({html: `Number of valid structures > 10000, only 10000 are allowed`});
+  				}
+  				//Report
+  				new M.Toast({html: `The file is processed: ${n_input_records} records, ${n_valid_structs} valid structures, ${data_validated.length} structures will be uploaded`});
+  				//Gather data to JSON
+  				data_send.meta = {"n_input_records": n_input_records, "n_valid_structs": n_valid_structs};
+  				data_send.data = data_validated;
+  				console.log(data_send);
+  				//Send to the srever
+  				let response = await fetch('process.php', {
+  					method: 'POST',
+  					headers: {'Content-Type': 'application/json;charset=utf-8'},
+ 		 				body: JSON.stringify(data_send)
+					});
+					result = await response.json();
+					new M.Toast({html: `${result.received}`});
+  				return;
+  			} else {
+  				new M.Toast({html: 'Upload one of the following: .TSV, .TAB, .CSV or .SDF'});
+  				input_one.hidden = false;
+  				input_two.hidden = false;
+  				return;
+  			}
+  			} else {
+  				new M.Toast({html: 'File is too big: > 100 Mb'});
+  				input_one.hidden = false;
+  				input_two.hidden = false;
+  				return;
+  			}
+  		} else {
+  			new M.Toast({html: 'Provide the file, please'});
+  			input_one.hidden = false;
+  			input_two.hidden = false;
+  			return;
+  		}
+  	}
+  	//Assess and visualize chemical diversity on scaffold level
+  	file_supplier = document.getElementById("chem_file");
+  	start_diversity = document.getElementById("diversity_btn");
+  	start_diversity.onclick = async function () { progress_bar.hidden = false;
+  																								await process_chemFile(file_supplier);
+  																								progress_bar.hidden = true; };
+	});
+  </script>
