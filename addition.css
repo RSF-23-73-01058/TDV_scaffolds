@@ -1,0 +1,176 @@
+body {
+  display: flex;
+  min-height: 97vh;
+  flex-direction: column;
+  font-family: Roboto;
+}
+
+main {
+  flex: 1 0 auto;
+  max-width: 95vw;
+}
+
+footer {
+  margin-top: auto;
+  text-align: center;
+}
+
+@font-face {
+  font-family: 'Material Icons';
+  font-weight: 400;
+  font-style: normal;
+  src: local('Material Icons'), local('MaterialIcons-Outlined'),
+    url('icons/Material_Symbols_Outlined/static/MaterialSymbolsOutlined_28pt-Regular.ttf') format('truetype');
+}
+
+.modal-trigger {
+  color: #050404;
+}
+
+.overflow-ellipsis {
+  max-width: 18vw;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.modal-close.btn.text {
+  background-color: #757575;
+}
+
+.material-icons {
+  display: inline-block;
+  font-family: 'Material Icons';
+  font-size: 28px; /* Preferred icon size */
+  font-weight: normal;
+  line-height: 1;
+  font-style: normal;
+  text-transform: none;
+  letter-spacing: normal;
+  word-wrap: normal;
+  white-space: nowrap;
+  direction: ltr;
+
+  /* Support for all WebKit browsers. */
+  -webkit-font-smoothing: antialiased;
+  /* Support for Safari and Chrome. */
+  text-rendering: optimizeLegibility;
+
+  /* Support for Firefox. */
+  -moz-osx-font-smoothing: grayscale;
+
+  /* Support for IE. */
+  font-feature-settings: 'liga';
+}
+
+.material-tooltip {
+  background-color: transparent;
+  max-height: 18vh;
+  max-width: 18vw;
+  --children-height: calc(17vh - 5px);
+  --children-width: calc(17vw - 5px);
+}
+
+.input-field inline {
+   background-color: #bbdefb;
+}
+
+.switch label .lever {
+   background-color: #bbdefb;
+}
+
+.switch label input[type=checkbox]:checked+.lever {
+   background-color: #bbdefb;
+}
+
+.switch label input[type=checkbox]:checked+.lever:after {
+   background-color: #eceff1;
+}
+
+.span_selected {
+  color: #050404;
+  text-decoration: underline #bbdefb;
+  text-decoration-thickness: 0.2vh;
+  text-underline-offset: 0.7vh;
+}
+
+.span_notSelected {
+  color: #9e9e9e;
+  text-decoration: none;
+}
+
+.select-wrapper input.select-dropdown {
+   border-bottom: 0.2vh solid #bbdefb;
+}
+
+.select-wrapper input.select-dropdown:focus {
+  border-bottom: 1px solid #bbdefb;
+}
+
+.dropdown-content li > span {
+  color: #050404;
+}
+
+.thing {
+  opacity: 0.35;
+}
+
+.thing.enabled_thing {
+  opacity: 1;
+}
+
+.input-field.inline input:focus{
+  border-bottom-color: #bbdefb !important;
+  box-shadow: 0px 1px 0px 0px #bbdefb !important;
+}
+
+#main_container_input_outputDiversity {
+  width: 90%;
+}
+
+#main_container_outputInterface {
+  width: 95%;
+}
+
+#cloud_row {
+  margin-bottom: -6rem !important;
+}
+
+#chart_row {
+  margin-top: 0px;
+}
+
+#chem_file_wrapper {
+  border-bottom: 1px solid #bbdefb;
+  box-shadow: 0 1px 0 0 #bbdefb;
+}
+
+#nonGen_svg {
+  height: var(--children-height);
+  width: var(--children-width);
+}
+
+#gen_svg {
+  height: var(--children-height);
+  width: var(--children-width);
+}
+
+#svg_container{
+  padding-bottom: 0 !important;
+}
+
+#chart_row{
+  padding-bottom: 0 !important;
+}
+
+#bottom_section{
+  padding: 0 !important;
+}
+
+#test{
+  padding: 0 !important;
+}
+
+#filter_property_label{
+  color: #2196f3;
+}
