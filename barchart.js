@@ -83,10 +83,10 @@ async function charter (chart_field, results, field_width, field_height, fetch_c
 		let y_tick = document.createElementNS('http://www.w3.org/2000/svg', 'line');
 		let y_label = document.createElementNS('http://www.w3.org/2000/svg', 'text');
 		y_label.innerHTML = ticks_arr[t].toFixed(2).replace(/^0/, "").replace(/0\b/, "");
-		y_label.setAttribute('font-size', '0.65em');
+		y_label.setAttribute('font-size', '1em');
 		y_label.setAttribute('id', 'y_label');
-		y_label.setAttribute('x', -10);
-		y_label.setAttribute('y', +y_val);
+		y_label.setAttribute('x', -20);
+		y_label.setAttribute('y', +	y_val);
 		y_tick.setAttribute('stroke', 'black');
 		y_tick.setAttribute('x1', +field_width / 40);
 		y_tick.setAttribute('y1', +y_val);
@@ -160,10 +160,10 @@ async function charter (chart_field, results, field_width, field_height, fetch_c
 				break;
 		}
 		label_elem.innerHTML = label;
-		label_elem.setAttribute('font-size', '0.65em');
+		label_elem.setAttribute('font-size', '1em');
 		label_elem.setAttribute('id', key);
 		label_elem.setAttribute('x', +elem_x);
-		label_elem.setAttribute('y', +(field_height - base_y + field_height / 23));
+		label_elem.setAttribute('y', +(field_height - base_y + field_height / 15));
 		chart_field.appendChild(label_elem);
 		//SVG needs to be drawn to adjust the labels positions 
 		//Move to the next position
@@ -221,7 +221,7 @@ async function charter (chart_field, results, field_width, field_height, fetch_c
 		chart_field.appendChild(square_elem);
 		let square_legend = document.createElementNS('http://www.w3.org/2000/svg', 'text');
 		square_legend.innerHTML = color_text;
-		square_legend.setAttribute('font-size', '0.65em');
+		square_legend.setAttribute('font-size', '1em');
 		square_legend.setAttribute('x', +(color_legend_pos_x + elem_width*1.2));
 		square_legend.setAttribute('y', +(color_legend_pos_y + elem_width*0.6));
 		chart_field.appendChild(square_legend);
